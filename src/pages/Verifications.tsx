@@ -16,7 +16,6 @@ import {
   Building2,
   Check,
   CheckCircle2,
-  Clock,
   ExternalLink,
   FileWarning,
   History,
@@ -27,7 +26,6 @@ import {
   RefreshCw,
   ShieldCheck,
   Store,
-  X,
   XCircle,
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -38,7 +36,7 @@ import Layout from '../components/Layout';
 import { auth, db } from '../lib/firebase';
 import { useCollection } from '../lib/hooks';
 import { getSignedKycUrl, sendAdminPush } from '../lib/kyc';
-import { relativeTime, shortDate } from '../lib/format';
+import { relativeTime } from '../lib/format';
 
 interface PendingUser {
   id: string;
