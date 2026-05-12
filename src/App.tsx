@@ -5,6 +5,7 @@ import Auctions from './pages/Auctions';
 import Chats from './pages/Chats';
 import Dashboard from './pages/Dashboard';
 import Deals from './pages/Deals';
+import DealDetail from './pages/DealDetail';
 import Listings from './pages/Listings';
 import ListingDetail from './pages/ListingDetail';
 import Login from './pages/Login';
@@ -59,6 +60,12 @@ export default function App() {
       <Route
         path="/deals"
         element={<ProtectedRoute>{(email) => <Deals email={email} />}</ProtectedRoute>}
+      />
+      <Route
+        path="/deals/:id"
+        element={
+          <ProtectedRoute>{(email) => <DealDetail email={email} />}</ProtectedRoute>
+        }
       />
       <Route
         path="/chats"

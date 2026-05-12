@@ -1,6 +1,7 @@
 import { collection, orderBy, query } from 'firebase/firestore';
-import { Handshake, ImageOff } from 'lucide-react';
+import { ChevronRight, Handshake, ImageOff } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Badge from '../components/Badge';
 import EmptyState from '../components/EmptyState';
@@ -92,6 +93,7 @@ export default function Deals({ email }: { email: string | null }) {
   const [stateFilter, setStateFilter] = useState<'all' | DealRow['state']>(
     'all',
   );
+  const navigate = useNavigate();
 
   const filtered = useMemo(() => {
     const list = data ?? [];
@@ -156,13 +158,18 @@ export default function Deals({ email }: { email: string | null }) {
                 <th className="px-4 py-3">Price</th>
                 <th className="px-4 py-3">Docs</th>
                 <th className="px-4 py-3">Updated</th>
+                <th className="px-4 py-3"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((d) => {
                 const badge = stateBadgeKind(d.state);
                 return (
-                  <tr key={d.id} className="hover:bg-gray-50">
+                  <tr
+                    key={d.id}
+                    onClick={() => navigate(`/deals/${d.id}`)}
+                    className="hover:bg-gray-50 cursor-pointer"
+                  >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2 min-w-0">
                         {d.listingCover ? (
@@ -202,6 +209,17 @@ export default function Deals({ email }: { email: string | null }) {
                     <td className="px-4 py-3 text-sm">{d.docsCount}</td>
                     <td className="px-4 py-3 text-xs text-ink-soft">
                       {relativeTime(d.updatedAt?.toDate?.() ?? null)}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/deals/${d.id}`);
+                        }}
+                        className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-2 py-1 text-xs hover:bg-gray-50"
+                      >
+                        Open <ChevronRight size={12} />
+                      </button>
                     </td>
                   </tr>
                 );
