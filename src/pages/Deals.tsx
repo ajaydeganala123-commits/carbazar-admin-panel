@@ -19,6 +19,7 @@ interface DealRow {
   buyerId: string;
   buyerName: string;
   state:
+    | 'pendingAcceptance'
     | 'agreed'
     | 'docsShared'
     | 'meetingSet'
@@ -54,6 +55,7 @@ function mapDeal(id: string, data: any): DealRow {
 
 const STATE_FILTERS: Array<{ id: 'all' | DealRow['state']; label: string }> = [
   { id: 'all', label: 'All' },
+  { id: 'pendingAcceptance', label: 'Pending acceptance' },
   { id: 'agreed', label: 'Agreed' },
   { id: 'docsShared', label: 'Docs shared' },
   { id: 'meetingSet', label: 'Meeting set' },
@@ -74,8 +76,12 @@ function stateBadgeKind(state: DealRow['state']): {
       return { tone: 'brand', label: 'Docs shared' };
     case 'agreed':
       return { tone: 'brand', label: 'Agreed' };
+    case 'pendingAcceptance':
+      return { tone: 'neutral', label: 'Pending acceptance' };
     case 'cancelled':
       return { tone: 'danger', label: 'Cancelled' };
+    default:
+      return { tone: 'neutral', label: String(state) || 'Unknown' };
   }
 }
 
